@@ -1,65 +1,278 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import PrayerTimings from "@/components/PrayerTimings";
+import Donate from "@/components/Donate";
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: "Ibrahim Masjid – Kolkata | Prayer Times, Donations & Contact",
+  description:
+    "Ibrahim Masjid in Taltala, Kolkata. Join us for daily prayers, Jumu'ah, Taraweeh & community events. Donate online, check prayer timings, or reach Imam Mohammed Rehan Khan.",
+  keywords:
+    "Ibrahim Masjid, Masjid Kolkata, mosque Kolkata, prayer times Kolkata, Jumu'ah Kolkata, Islamic centre Kolkata, mosque Taltala, donate mosque",
+  openGraph: {
+    title: "Ibrahim Masjid – Kolkata",
+    description:
+      "A place of prayer, community and faith in the heart of Kolkata.",
+    url: "https://ibrahimmasjid.org",
+    siteName: "Ibrahim Masjid",
+    locale: "en_IN",
+    type: "website",
+  },
+};
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <main className="site-main">
+        {/* ── NAV ── */}
+        <header className="nav">
+          <div className="nav-inner container">
+            <div className="nav-brand">
+              <span className="brand-arabic" aria-hidden="true">
+                مسجد ابراهیم
+              </span>
+              <span className="brand-english">Ibrahim Masjid</span>
+            </div>
+            <nav aria-label="Primary navigation">
+              <ul className="nav-links">
+                <li>
+                  <a href="#timings">Timings</a>
+                </li>
+                <li>
+                  <a href="#donate">Donate</a>
+                </li>
+                <li>
+                  <a href="#contact">Contact</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </header>
+
+        {/* ── HERO ── */}
+        <section className="hero" aria-label="Welcome to Ibrahim Masjid">
+          <div className="hero-pattern" aria-hidden="true"></div>
+          <div className="container hero-content">
+            <p className="hero-eyebrow">Assalamu Alaikum</p>
+            <h1 className="hero-title">
+              Ibrahim
+              <br />
+              <span className="hero-title-accent">Masjid</span>
+            </h1>
+            <p className="hero-tagline">
+              A house of Allah in the heart of Kolkata —<br />
+              open for every prayer, every soul.
+            </p>
+            <div className="hero-ctas">
+              <a href="#timings" className="btn btn-primary">
+                Prayer Times
+              </a>
+              <a href="#donate" className="btn btn-outline">
+                Support the Masjid
+              </a>
+            </div>
+          </div>
+          <div className="hero-scroll-hint" aria-hidden="true">
+            <span></span>
+          </div>
+        </section>
+
+        {/* ── ABOUT ── */}
+        <section className="about section" id="about" aria-label="About Ibrahim Masjid">
+          <div className="container">
+            <div className="section-label">Our Masjid</div>
+            <h2 className="section-title">A Community Built on Faith</h2>
+            <div className="about-grid">
+              <div className="about-text">
+                <p>
+                  Ibrahim Masjid stands as a G+3 floor structure in the
+                  Taltala neighbourhood of Kolkata, serving hundreds of Muslims
+                  every day. On Jumu'ah, our halls fill completely — a
+                  testament to the unity of the community.
+                </p>
+                <p>
+                  During Ramadan we host two full Taraweeh sessions each night.
+                  Our Imam, <strong>Mohammed Rehan Khan</strong>, is available
+                  for spiritual guidance, family counseling, and community
+                  queries.
+                </p>
+                <p>
+                  The masjid also offers premium quality dry fruits, original
+                  honey, and dates — sourced with care and available through
+                  the Imam.
+                </p>
+              </div>
+              <div className="about-stats">
+                <div className="stat-card">
+                  <span className="stat-number">5</span>
+                  <span className="stat-label">Daily Prayers</span>
+                </div>
+                <div className="stat-card">
+                  <span className="stat-number">G+3</span>
+                  <span className="stat-label">Floor Masjid</span>
+                </div>
+                <div className="stat-card">
+                  <span className="stat-number">2×</span>
+                  <span className="stat-label">Taraweeh (Ramadan)</span>
+                </div>
+                <div className="stat-card">
+                  <span className="stat-number">Jumu'ah</span>
+                  <span className="stat-label">Every Friday</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── PRAYER TIMINGS ── */}
+        <PrayerTimings />
+
+        {/* ── DONATE ── */}
+        <Donate></Donate>
+
+        {/* ── IMAM ── */}
+        <section className="imam section" id="imam" aria-label="About the Imam">
+          <div className="container">
+            <div className="section-label">Leadership</div>
+            <h2 className="section-title">Imam Mohammed Rehan Khan</h2>
+            <div className="imam-grid">
+              <div className="imam-avatar" aria-hidden="true">
+                <span>MRK</span>
+              </div>
+              <div className="imam-info">
+                <p>
+                  Imam Mohammed Rehan Khan leads all five daily prayers and the
+                  Friday Jumu'ah at Ibrahim Masjid. He is available for
+                  spiritual counseling, guidance for parents and guardians, and
+                  community consultations.
+                </p>
+                <ul className="imam-services">
+                  <li>Spiritual guidance &amp; Islamic queries</li>
+                  <li>Guardian &amp; family consultation</li>
+                  <li>Nikah &amp; religious ceremonies</li>
+                  <li>Premium dry fruits, honey &amp; dates available</li>
+                </ul>
+                <a
+                  href="#contact"
+                  className="btn btn-primary"
+                  aria-label="Contact the Imam"
+                >
+                  Contact the Imam
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT ── */}
+        <section className="contact section" id="contact" aria-label="Contact Ibrahim Masjid">
+          <div className="container">
+            <div className="section-label">Get in Touch</div>
+            <h2 className="section-title">Visit or Contact Us</h2>
+            <div className="contact-grid">
+              <div className="contact-info">
+                <div className="contact-item">
+                  <span className="contact-icon" aria-hidden="true">📍</span>
+                  <div>
+                    <p className="contact-type">Address</p>
+                    <address className="contact-value">
+                      5B, Grant St, Esplanade,
+                      <br />
+                      Dharmatala, Taltala,
+                      <br />
+                      Kolkata, West Bengal 700013
+                    </address>
+                  </div>
+                </div>
+                <div className="contact-item">
+                  <span className="contact-icon" aria-hidden="true">📞</span>
+                  <div>
+                    <p className="contact-type">Phone</p>
+                    <a href="tel:+919088608610" className="contact-value link">
+                      +91 90886 08610
+                    </a>
+                  </div>
+                </div>
+                <div className="contact-item">
+                  <span className="contact-icon" aria-hidden="true">🕌</span>
+                  <div>
+                    <p className="contact-type">Imam</p>
+                    <p className="contact-value">Mohammed Rehan Khan</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ask the Imam form */}
+              <form
+                className="contact-form"
+                aria-label="Send a message to the Imam"
+              >
+                <h3 className="form-title">Ask the Imam</h3>
+                <div className="form-group">
+                  <label htmlFor="cf-name">Your Name</label>
+                  <input
+                    type="text"
+                    id="cf-name"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+                    autoComplete="name"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="cf-phone">Phone / WhatsApp</label>
+                  <input
+                    type="tel"
+                    id="cf-phone"
+                    name="phone"
+                    placeholder="+91 XXXXX XXXXX"
+                    autoComplete="tel"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="cf-message">Your Question or Message</label>
+                  <textarea
+                    id="cf-message"
+                    name="message"
+                    rows={4}
+                    placeholder="Write your question here…"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary btn-full">
+                  Send Message
+                </button>
+                <p className="form-note">
+                  The Imam will respond as soon as possible, in sha Allah.
+                </p>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* ── FOOTER ── */}
+        <footer className="footer">
+          <div className="container footer-inner">
+            <div className="footer-brand">
+              <span className="brand-arabic" aria-hidden="true">
+                مسجد ابراهیم
+              </span>
+              <span>Ibrahim Masjid, Kolkata</span>
+            </div>
+            <p className="footer-copy">
+              5B Grant St, Taltala, Kolkata 700013 ·{" "}
+              <a href="tel:+919088608610">+91 90886 08610</a>
+            </p>
+            <p className="footer-dua" aria-label="Islamic invocation">
+              بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+            </p>
+          </div>
+        </footer>
       </main>
-    </div>
+
+      {/* Global styles – move to globals.css in production */}
+      {/* <style jsx global>{`
+        
+      `}</style> */}
+    </>
   );
 }
