@@ -21,7 +21,7 @@ export default async function Donate() {
                   className="btn btn-primary"
                   aria-label="Call to donate"
                 >
-                  Call to Donate
+                  Call to Donate.
                 </a>
                 <a
           href="upi://pay?pa=khanmdrehan853-2@okhdfcbank&pn=MOHAMMAD%20REHMAN%20KHAN&tn=General%20Donation"
