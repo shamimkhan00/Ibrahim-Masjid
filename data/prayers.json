@@ -1,0 +1,7 @@
+[
+  { "prayer": "Fajr", "azan": "04:30 AM", "jamat": "05:00 AM" },
+  { "prayer": "Zuhr", "azan": "12:30 PM", "jamat": "01:30 PM" },
+  { "prayer": "Asr", "azan": "04:15 PM", "jamat": "04:45 PM" },
+  { "prayer": "Maghrib", "azan": "06:45 PM", "jamat": "06:50 PM" },
+  { "prayer": "Isha", "azan": "08:15 PM", "jamat": "08:30 PM" }
+]
