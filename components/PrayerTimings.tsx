@@ -254,7 +254,7 @@ export default function PrayerTimings() {
     fetchFreshTimings();
 
     // Quietly sweeps the server in the background for modifications every minute
-    const interval = setInterval(fetchFreshTimings, 60000);
+    const interval = setInterval(fetchFreshTimings, 60 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -294,7 +294,7 @@ export default function PrayerTimings() {
             <div className="jumuah-day">Friday · Jumu'ah</div>
             <div className="jumuah-time">12:30 PM</div>
             <p className="jumuah-note">
-              The hall fills completely on Jumu'ah. Please arrive early and bring your own prayer mat.
+              The hall fills completely on Jumu'ah. Please arrive early.
             </p>
           </div>
         </div>

@@ -1,28 +1,27 @@
 import { NextResponse } from "next/server";
-import { getStore } from "@netlify/blobs";
 import initialPrayers from "@/data/prayers.json";
 
-export async function GET() {
-  // 1. 💡 Check if running locally first. If yes, return the file data immediately and skip Netlify code.
-  if (process.env.NODE_ENV === "development") {
-    return NextResponse.json(initialPrayers, {
-      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" }
-    });
-  }
+export const dynamic = "force-dynamic";
 
+export async function GET() {
   try {
-    // 2. This code will now ONLY run when deployed live on Netlify's cloud infrastructure
+    const { getStore } = await import("@netlify/blobs");
     const store = getStore("masjid-data");
     const savedData = await store.get("prayer-timings", { type: "json" });
-    const data = savedData || initialPrayers;
-
-    return NextResponse.json(data, {
+    
+    return NextResponse.json(savedData || initialPrayers, {
       headers: { 
-        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate" 
+        // 1. Directs the user's browser not to cache anything
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        
+        // 2. ⚡ THE SOLID FIX: Forces Netlify's edge CDN network to drop all cache instantly on the first click
+        "Netlify-CDN-Cache-Control": "no-store, no-cache, must-revalidate",
+        "CDN-Cache-Control": "no-store, no-cache, must-revalidate"
       }
     });
   } catch (error) {
-    console.error("Failed to read prayer storage on production:", error);
-    return NextResponse.json(initialPrayers);
+    return NextResponse.json(initialPrayers, {
+      headers: { "Cache-Control": "no-store, no-cache, must-revalidate" }
+    });
   }
 }

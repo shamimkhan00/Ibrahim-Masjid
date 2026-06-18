@@ -133,11 +133,11 @@ export default function HomePage() {
         <section className="imam section" id="imam" aria-label="About the Imam">
           <div className="container">
             <div className="section-label">Leadership</div>
-            <h2 className="section-title">Imam Mohammed Rehan Khan</h2>
+            <h2 className="section-title">Maulana Imam Mohammed Rehan Khan</h2>
             <div className="imam-grid">
-              <div className="imam-avatar" aria-hidden="true">
+              {/* <div className="imam-avatar" aria-hidden="true">
                 <span>MRK</span>
-              </div>
+              </div> */}
               <div className="imam-info">
                 <p>
                   Imam Mohammed Rehan Khan leads all five daily prayers and the
@@ -183,6 +183,7 @@ export default function HomePage() {
                     </address>
                   </div>
                 </div>
+                
                 <div className="contact-item">
                   <span className="contact-icon" aria-hidden="true">📞</span>
                   <div>
@@ -200,51 +201,76 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+              <div className="contact-map" style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d921.1054495909381!2d88.35354792592629!3d22.5633223483105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a027707f3dc8559%3A0x2c2b2c6069957792!2sIbrahim%20masjid!5e0!3m2!1sen!2sin!4v1781780450257!5m2!1sen!2sin"
+                    width="100%" /* Changed to 100% so it fits nicely inside the layout container */
+                    // height="350" 
+                    style={{ border: 0, borderRadius: '8px' }} /* Added a small border radius to match modern UI aesthetics */
 
-              {/* Ask the Imam form */}
-              <form
-                className="contact-form"
-                aria-label="Send a message to the Imam"
-              >
-                <h3 className="form-title">Ask the Imam</h3>
-                <div className="form-group">
-                  <label htmlFor="cf-name">Your Name</label>
-                  <input
-                    type="text"
-                    id="cf-name"
-                    name="name"
-                    placeholder="Enter your name"
-                    required
-                    autoComplete="name"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Ibrahim Masjid Location Map"
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="cf-phone">Phone / WhatsApp</label>
-                  <input
-                    type="tel"
-                    id="cf-phone"
-                    name="phone"
-                    placeholder="+91 XXXXX XXXXX"
-                    autoComplete="tel"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="cf-message">Your Question or Message</label>
-                  <textarea
-                    id="cf-message"
-                    name="message"
-                    rows={4}
-                    placeholder="Write your question here…"
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary btn-full">
-                  Send Message
-                </button>
-                <p className="form-note">
-                  The Imam will respond as soon as possible, in sha Allah.
+              <div className="ask-imam-card">
+                <p className="ask-imam-eyebrow">
+                  Free of Cost Guidance
                 </p>
-              </form>
+
+                <h3 className="ask-imam-title">
+                  Ask the Imam
+                </h3>
+
+                <p className="ask-imam-description">
+                  Seek trusted guidance on any question or personal advice. Our
+                  community support services are completely private,
+                  confidential, and free of charge.
+                </p>
+
+                <div className="ask-imam-inner">
+                  <div className="ask-imam-summary">
+                    {/* <span
+                      className="ask-imam-icon"
+                      aria-hidden="true"
+                    >
+                      💬
+                    </span> */}
+                    {/* <div className="ask-imam-copy">
+                      <h4 className="ask-imam-subtitle">
+                        General or Personal Matters
+                      </h4>
+                      <p className="ask-imam-summary-text">
+                        Message the Imam directly on WhatsApp for a private
+                        consultation about family matters, religious questions,
+                        or everyday guidance.
+                      </p>
+                    </div> */}
+                  </div>
+
+                  <a
+                    href="https://wa.me/919088608610"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ask-imam-button"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="ask-imam-button-icon"
+                    >
+                      <path d="M12.004 2.001c-5.514 0-9.996 4.481-9.996 9.995 0 1.758.459 3.474 1.33 4.993L2 22l5.149-1.306a9.96 9.96 0 0 0 4.855 1.252h.004c5.514 0 9.995-4.481 9.995-9.995 0-2.674-1.041-5.188-2.93-7.075A9.926 9.926 0 0 0 12.004 2Zm0 18.243h-.003a8.206 8.206 0 0 1-4.181-1.139l-.299-.177-3.056.775.818-2.976-.194-.306a8.204 8.204 0 0 1-1.262-4.366c0-4.532 3.687-8.219 8.22-8.219a8.17 8.17 0 0 1 5.818 2.412 8.13 8.13 0 0 1 2.404 5.807c0 4.532-3.686 8.219-8.219 8.219Zm4.52-6.164c-.247-.124-1.463-.722-1.691-.805-.227-.084-.392-.124-.557.124-.165.248-.639.805-.783.969-.144.165-.289.186-.536.062-.247-.124-1.042-.384-1.986-1.223-.734-.654-1.23-1.462-1.374-1.71-.144-.248-.015-.382.109-.506.112-.11.247-.289.371-.433.124-.144.165-.248.247-.413.083-.165.041-.309-.021-.433-.062-.124-.557-1.341-.764-1.835-.201-.482-.406-.416-.557-.424l-.473-.009c-.165 0-.433.062-.66.309-.227.248-.866.846-.866 2.063s.887 2.393 1.01 2.558c.124.165 1.748 2.667 4.237 3.74.593.256 1.056.409 1.417.523.595.189 1.136.163 1.563.099.477-.071 1.463-.598 1.67-1.18.206-.582.206-1.08.144-1.18-.062-.1-.227-.165-.474-.289Z" />
+                    </svg>
+                    Connect on WhatsApp
+                  </a>
+
+                  <p className="ask-imam-note">
+                    The Imam will respond to your messages as soon as possible,
+                    in sha Allah.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>

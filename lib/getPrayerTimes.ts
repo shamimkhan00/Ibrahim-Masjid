@@ -60,9 +60,6 @@
 //   }
 // }
 
-
-
-
 export type PrayerTime = {
   prayer: string;
   azan: string;
@@ -71,7 +68,13 @@ export type PrayerTime = {
 
 export async function getPrayerTimes(): Promise<PrayerTime[]> {
   try {
-    const res = await fetch("/api/prayer-times", { cache: "no-store" });
+    // Next.js caching configuration optimized for Netlify
+    const res = await fetch("/api/prayer-times", { 
+      next: { 
+        revalidate: 3600 // Cache for 1 hour (3600 seconds)
+      } 
+    });
+    
     if (!res.ok) throw new Error("Failed to pull internal times");
     return await res.json();
   } catch (error) {
