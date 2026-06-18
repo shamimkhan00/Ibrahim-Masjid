@@ -9,15 +9,34 @@ export default function AdminPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    // Check local storage fallback first for offline testing
-    const localSaved = localStorage.getItem("local_prayer_timings");
-    if (localSaved) {
-      setPrayers(JSON.parse(localSaved));
-    } else {
-      getPrayerTimes().then((data) => {
-        if (data.length > 0) setPrayers(data);
-      });
-    }
+    let cancelled = false;
+
+    const loadPrayers = async () => {
+      const localSaved = window.localStorage.getItem("local_prayer_timings");
+
+      if (localSaved) {
+        try {
+          const parsedPrayers = JSON.parse(localSaved) as PrayerTime[];
+          if (!cancelled) {
+            setPrayers(parsedPrayers);
+          }
+          return;
+        } catch {
+          // Fall back to the shared store if the local cache cannot be parsed.
+        }
+      }
+
+      const data = await getPrayerTimes();
+      if (!cancelled && data.length > 0) {
+        setPrayers(data);
+      }
+    };
+
+    void loadPrayers();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const handleTimeChange = (index: number, field: "azan" | "jamat", value: string) => {
@@ -40,9 +59,17 @@ export default function AdminPage() {
 
       if (res.ok) {
         const resData = await res.json();
+        const updatePayload = JSON.stringify(prayers);
+
+        window.localStorage.setItem("local_prayer_timings", updatePayload);
+
+        if (typeof window !== "undefined" && "BroadcastChannel" in window) {
+          const channel = new BroadcastChannel("prayer-timings");
+          channel.postMessage({ prayers, updatedAt: Date.now() });
+          channel.close();
+        }
         
         if (resData.isLocal) {
-          localStorage.setItem("local_prayer_timings", JSON.stringify(prayers));
           setStatus({ message: "Saved locally! (Changes visible on your device)", isError: false });
         } else {
           setStatus({ message: "Times updated successfully live on the internet!", isError: false });
@@ -51,7 +78,7 @@ export default function AdminPage() {
         const errData = await res.json();
         setStatus({ message: errData.message || "Failed to update.", isError: true });
       }
-    } catch (err) {
+    } catch {
       setStatus({ message: "Connection error occurred.", isError: true });
     } finally {
       setSaving(false);

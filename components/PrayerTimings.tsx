@@ -244,19 +244,72 @@ export default function PrayerTimings() {
   const [prayers, setPrayers] = useState<PrayerTime[]>([]);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const applyTimings = (data: PrayerTime[]) => {
+      if (!isMounted || !Array.isArray(data) || data.length === 0) {
+        return;
+      }
+
+      setPrayers(data);
+    };
+
     const fetchFreshTimings = async () => {
       const data = await getPrayerTimes();
-      if (data && data.length > 0) {
-        setPrayers(data);
+      applyTimings(data);
+    };
+
+    const broadcastChannel =
+      typeof window !== "undefined" && "BroadcastChannel" in window
+        ? new BroadcastChannel("prayer-timings")
+        : null;
+
+    const handlePrayerUpdate = (event: MessageEvent) => {
+      const nextPrayers = event.data?.prayers;
+
+      if (Array.isArray(nextPrayers)) {
+        applyTimings(nextPrayers as PrayerTime[]);
+        return;
+      }
+
+      fetchFreshTimings();
+    };
+
+    const handleStorageUpdate = (event: StorageEvent) => {
+      if (event.key !== "local_prayer_timings" || !event.newValue) {
+        return;
+      }
+
+      try {
+        const nextPrayers = JSON.parse(event.newValue) as PrayerTime[];
+        applyTimings(nextPrayers);
+      } catch {
+        fetchFreshTimings();
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        fetchFreshTimings();
       }
     };
 
     fetchFreshTimings();
 
-    // Quietly sweeps the server in the background for modifications every minute
-    const interval = setInterval(fetchFreshTimings, 60 * 60 * 1000);
+    const interval = setInterval(fetchFreshTimings, 30_000);
 
-    return () => clearInterval(interval);
+    broadcastChannel?.addEventListener("message", handlePrayerUpdate);
+    window.addEventListener("storage", handleStorageUpdate);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+      broadcastChannel?.removeEventListener("message", handlePrayerUpdate);
+      broadcastChannel?.close();
+      window.removeEventListener("storage", handleStorageUpdate);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   const displayPrayers = prayers.length > 0 ? prayers : [
@@ -291,10 +344,10 @@ export default function PrayerTimings() {
 
         <div className="jumuah-card">
           <div className="jumuah-inner">
-            <div className="jumuah-day">Friday · Jumu'ah</div>
+            <div className="jumuah-day">Friday · Jumu&apos;ah</div>
             <div className="jumuah-time">12:30 PM</div>
             <p className="jumuah-note">
-              The hall fills completely on Jumu'ah. Please arrive early.
+              The hall fills completely on Jumu&apos;ah. Please arrive early.
             </p>
           </div>
         </div>

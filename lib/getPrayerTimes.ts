@@ -68,11 +68,8 @@ export type PrayerTime = {
 
 export async function getPrayerTimes(): Promise<PrayerTime[]> {
   try {
-    // Next.js caching configuration optimized for Netlify
-    const res = await fetch("/api/prayer-times", { 
-      next: { 
-        revalidate: 3600 // Cache for 1 hour (3600 seconds)
-      } 
+    const res = await fetch("/api/prayer-times", {
+      cache: "no-store",
     });
     
     if (!res.ok) throw new Error("Failed to pull internal times");
